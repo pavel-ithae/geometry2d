@@ -1,6 +1,5 @@
 #pragma once
 #include <geometry2d/point.hpp>
-#include <math.h>
 #include <iostream>
 
 namespace geometry2d
@@ -66,10 +65,10 @@ namespace geometry2d
 
         friend std::ostream &operator<<(std::ostream &os, const Direction &direction);
 
-        static Direction right() { return Direction().set(1.0f, 0.0f, 0.0f, 0.0f); }
-        static Direction left() { return Direction().set(-1.0f, 0.0f, M_PIf, 180.0f); }
-        static Direction up() { return Direction().set(0.0f, 1.0f, M_PI_2f, 90.0f); }
-        static Direction down() { return Direction().set(0.0f, -1.0f, M_PIf + M_PI_2f, 270.0f); }
+        static Direction right();
+        static Direction left();
+        static Direction up();
+        static Direction down();
 
         static float getAngleDifferenceRadians(const Direction &from, const Direction &to);
         static float getAngleDifferenceDegrees(const Direction &from, const Direction &to);

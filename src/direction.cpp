@@ -1,6 +1,11 @@
 #include <geometry2d/direction.hpp>
 #include <geometry2d/point.hpp>
+
+#if _WIN32
+    #define _USE_MATH_DEFINES
+#endif
 #include <math.h>
+
 using namespace geometry2d;
 
 #define RADIANS_TO_DEGREES(radians) (radians * (180.0f / M_PIf))
@@ -14,6 +19,26 @@ Direction &Direction::set(float x, float y, float radians, float degrees)
     Direction::degrees_ = degrees;
 
     return *this;
+}
+
+Direction Direction::right()
+{
+    return Direction().set(1.0f, 0.0f, 0.0f, 0.0f);
+}
+
+Direction Direction::left()
+{
+    return Direction().set(-1.0f, 0.0f, M_PIf, 180.0f);
+}
+
+Direction Direction::up()
+{
+    return Direction().set(0.0f, 1.0f, M_PI_2f, 90.0f);
+}
+
+Direction Direction::down()
+{
+    return Direction().set(0.0f, -1.0f, M_PIf + M_PI_2f, 270.0f);
 }
 
 float Direction::getAngleDifferenceRadians(const Direction &from, const Direction &to)

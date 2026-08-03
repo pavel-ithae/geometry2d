@@ -2,6 +2,7 @@
 #include <geometry2d/point.hpp>
 #include <geometry2d/direction.hpp>
 #include <limits.h>
+#include <math.h>
 
 #define FLOAT_EPSILON std::numeric_limits<float>::epsilon()
 #define DIAGONAL_DELTA(length) ((1.0f / std::sqrt(2.0f)) * length)
