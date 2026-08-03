@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.31)
 
 project(geometry2dLibrary)
 
+enable_testing()
+
 file(GLOB GEOMETRY2D_SOURCE "./src/*.cpp")
 file(GLOB GEOMETRY2D_HEADERS "./include/*.hpp")
 
@@ -23,3 +25,7 @@ target_sources(geometry2d
         FILES
             ${GEOMETRY2D_HEADERS}
 )
+
+if(BUILD_TESTING)
+    add_subdirectory(./tests)
+endif()

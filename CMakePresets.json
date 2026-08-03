@@ -1,0 +1,34 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "library",
+            "displayName": "Build Static Library",
+            "description": "Builds Geometry2D as a static library.",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "test",
+            "displayName": "Build Library w/ Test",
+            "description": "Builds Geometry2D library and its tests.",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_TESTING": true
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "library",
+            "configurePreset": "library"
+        },
+        {
+            "name": "test",
+            "configurePreset": "test"
+        }
+    ]
+}
