@@ -8,8 +8,15 @@
 
 using namespace geometry2d;
 
-#define RADIANS_TO_DEGREES(radians) (radians * (180.0f / M_PIf))
-#define DEGREES_TO_RADIANS(degrees) (degrees * (M_PIf / 180.0f))
+#if _WIN32
+    #define PI M_PI
+    #define PI_2 M_PI_2
+#else
+    #define PI M_PIf
+    #define PI_2 M_PI_2f
+#endif
+#define RADIANS_TO_DEGREES(radians) (radians * (180.0f / PI))
+#define DEGREES_TO_RADIANS(degrees) (degrees * (PI / 180.0f))
 
 Direction &Direction::set(float x, float y, float radians, float degrees)
 {
@@ -28,17 +35,17 @@ Direction Direction::right()
 
 Direction Direction::left()
 {
-    return Direction().set(-1.0f, 0.0f, M_PIf, 180.0f);
+    return Direction().set(-1.0f, 0.0f, PI, 180.0f);
 }
 
 Direction Direction::up()
 {
-    return Direction().set(0.0f, 1.0f, M_PI_2f, 90.0f);
+    return Direction().set(0.0f, 1.0f, PI_2, 90.0f);
 }
 
 Direction Direction::down()
 {
-    return Direction().set(0.0f, -1.0f, M_PIf + M_PI_2f, 270.0f);
+    return Direction().set(0.0f, -1.0f, PI + PI_2, 270.0f);
 }
 
 float Direction::getAngleDifferenceRadians(const Direction &from, const Direction &to)
@@ -47,9 +54,9 @@ float Direction::getAngleDifferenceRadians(const Direction &from, const Directio
 
     if (rawDifference >= 0.0f)
     {
-        if (rawDifference > M_PIf)
+        if (rawDifference > PI)
         {
-            return -(M_PIf - (rawDifference - M_PIf));
+            return -(PI - (rawDifference - PI));
         }
         else
         {
@@ -58,9 +65,9 @@ float Direction::getAngleDifferenceRadians(const Direction &from, const Directio
     }
     else
     {
-        if (rawDifference <= (-M_PIf))
+        if (rawDifference <= (-PI))
         {
-            return M_PIf + (rawDifference + M_PIf);
+            return PI + (rawDifference + PI);
         }
         else
         {
@@ -136,9 +143,9 @@ Direction &Direction::setPoint(float x, float y)
 
 Direction &Direction::setAngleRadians(float radians)
 {
-    if (radians >= (M_PIf * 2.0f))
+    if (radians >= (PI * 2.0f))
     {
-        Direction::radians_ = fmod(radians, (M_PIf * 2.0f));
+        Direction::radians_ = fmod(radians, (PI * 2.0f));
     }
     else
     {
@@ -196,7 +203,7 @@ Direction &Direction::rotateDegrees(float degrees)
 
 Direction &Direction::invert()
 {
-    float inverseRadians = (Direction::radians_ < M_PIf) ? (Direction::radians_ + M_PIf) : (Direction::radians_ - M_PIf);
+    float inverseRadians = (Direction::radians_ < PI) ? (Direction::radians_ + PI) : (Direction::radians_ - PI);
 
     set(-Direction::x_, -Direction::y_, inverseRadians, RADIANS_TO_DEGREES(inverseRadians));
 
