@@ -1,6 +1,7 @@
 #include <geometry2d/direction.hpp>
 #include <geometry2d/point.hpp>
 #include <geometry2d/macros.hpp>
+#include <iostream>
 
 using namespace geometry2d;
 

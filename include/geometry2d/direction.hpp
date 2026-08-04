@@ -1,6 +1,6 @@
 #pragma once
 #include <geometry2d/point.hpp>
-#include <iostream>
+#include <iosfwd>
 
 namespace geometry2d
 {
