@@ -1,22 +1,8 @@
 #include <geometry2d/direction.hpp>
 #include <geometry2d/point.hpp>
-
-#if _WIN32
-    #define _USE_MATH_DEFINES
-#endif
-#include <math.h>
+#include <geometry2d/macros.hpp>
 
 using namespace geometry2d;
-
-#if _WIN32
-    #define PI M_PI
-    #define PI_2 M_PI_2
-#else
-    #define PI M_PIf
-    #define PI_2 M_PI_2f
-#endif
-#define RADIANS_TO_DEGREES(radians) (radians * (180.0f / PI))
-#define DEGREES_TO_RADIANS(degrees) (degrees * (PI / 180.0f))
 
 Direction &Direction::set(float x, float y, float radians, float degrees)
 {

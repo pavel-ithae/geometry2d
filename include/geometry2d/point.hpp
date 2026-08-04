@@ -34,6 +34,11 @@ namespace geometry2d
         Point &translate(const Point &offsetTranslation) { return translate(offsetTranslation.x, offsetTranslation.y); }
         Point &translate(const Direction &translationDirection, float translationLength);
 
+        Point &rotateRadians(float radians);
+        Point &rotateRadians(const Point &pivot, float radians);
+        Point &rotateDegrees(float degrees);
+        Point &rotateDegrees(const Point &pivot, float degrees);
+
         Point &scale(float scale);
         Point &scale(const Point &pivot, float scale);
 
@@ -43,6 +48,11 @@ namespace geometry2d
         Point getTranslated(float xTranslation, float yTranslation) const { return Point(x, y).translate(xTranslation, yTranslation); }
         Point getTranslated(const Point &offsetTranslation) const { return getTranslated(offsetTranslation.x, offsetTranslation.y); }
         Point getTranslated(const Direction &translationDirection, float translationLength) const { return Point(x, y).translate(translationDirection, translationLength); }
+
+        Point getRotatedRadians(float radians) const { return Point(x, y).rotateRadians(radians); }
+        Point getRotatedRadians(const Point &pivot, float radians) const { return Point(x, y).rotateRadians(pivot, radians); }
+        Point getRotatedDegrees(float degrees) const { return Point(x, y).rotateDegrees(degrees); }
+        Point getRotatedDegrees(const Point &pivot, float degrees) const { return Point(x, y).rotateDegrees(pivot, degrees); }
 
         Point getScaled(float scale) const { return Point(x, y).scale(scale); }
         Point getScaled(const Point &pivot, float scale) const { return Point(x, y).scale(pivot, scale); }

@@ -1,10 +1,10 @@
 #include <geometry2d/point.hpp>
 #include <geometry2d/direction.hpp>
+#include <geometry2d/macros.hpp>
 #include <math.h>
 #include <iostream>
-using namespace geometry2d;
 
-#define EQUALS_APROX_EPSILON 0.001f
+using namespace geometry2d;
 
 Point &Point::translate(float xTranslation, float yTranslation)
 {
@@ -17,6 +17,42 @@ Point &Point::translate(float xTranslation, float yTranslation)
 Point &Point::translate(const Direction &translationDirection, float translationLength)
 {
     return translate(translationDirection.getTranslation(translationLength));
+}
+
+Point &Point::rotateRadians(float radians)
+{
+    Point temp(Point::x, Point::y);
+
+    float cos = std::cos(radians);
+    float sin = std::sin(radians);
+
+    Point::x = (temp.x * cos) - (temp.y * sin);
+    Point::y = (temp.x * sin) + (temp.y * cos);
+
+    return *this;
+}
+
+Point &Point::rotateRadians(const Point &pivot, float radians)
+{
+    Point temp(Point::x - pivot.x, Point::y - pivot.y);
+
+    float cos = std::cos(radians);
+    float sin = std::sin(radians);
+
+    Point::x = pivot.x + ((temp.x * cos) - (temp.y * sin));
+    Point::y = pivot.y + ((temp.x * sin) + (temp.y * cos));
+
+    return *this;
+}
+
+Point &Point::rotateDegrees(float degrees)
+{
+    return rotateRadians(DEGREES_TO_RADIANS(degrees));
+}
+
+Point &Point::rotateDegrees(const Point &pivot, float degrees)
+{
+    return rotateRadians(pivot, DEGREES_TO_RADIANS(degrees));
 }
 
 Point &Point::scale(float scale)
