@@ -1,25 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <geometry2d/point.hpp>
 #include <geometry2d/direction.hpp>
-#include <limits.h>
-
-#if _WIN32  // In Windows, this macro is needed to expose the PI macros.
-    #define _USE_MATH_DEFINES
-#endif
-#include <math.h>
-
-#define FLOAT_EPSILON std::numeric_limits<float>::epsilon()
-#define DIAGONAL_DELTA(length) ((1.0f / std::sqrt(2.0f)) * length)
-
-#if _WIN32 // Windows doesn't have f versions.
-    #define PI M_PI
-    #define PI_2 M_PI_2
-    #define PI_4 M_PI_4
-#else
-    #define PI M_PIf
-    #define PI_2 M_PI_2f
-    #define PI_4 M_PI_4f
-#endif
+#include "test_macros.hpp"
 
 using namespace geometry2d;
 

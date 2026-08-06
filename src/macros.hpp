@@ -1,9 +1,3 @@
-/*
-NOTE:
-    Avoid using this header within other header files.
-    Try to limit it's use to source files only to avoid polution.
-*/
-
 #pragma once
 
 #if _WIN32  // In Windows, this macro is needed to expose the PI macros.

@@ -1,8 +1,8 @@
 #include <geometry2d/point.hpp>
 #include <geometry2d/direction.hpp>
-#include <geometry2d/macros.hpp>
 #include <math.h>
 #include <iostream>
+#include "macros.hpp"
 
 using namespace geometry2d;
 

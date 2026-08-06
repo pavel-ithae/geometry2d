@@ -22,11 +22,11 @@ namespace geometry2d
         bool operator==(const Point &other) const { return equalsApprox(other); }
         bool operator!=(const Point &other) const { return !equalsApprox(other); }
 
-        Point operator-() const { return Point(-x, -y); }
-
         Point operator+(const Point &addend) const { return getTranslated(addend); }
         Point operator-(const Point &subtrahend) const { return getTranslated(-subtrahend); }
         Point operator*(float multiplier) const { return getScaled(multiplier); }
+
+        Point operator-() const { return Point(-x, -y); }
 
         friend std::ostream &operator<<(std::ostream &os, const Point &p);
 
