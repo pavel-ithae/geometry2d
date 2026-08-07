@@ -1,5 +1,3 @@
-#include <limits.h>
-
 #if _WIN32  // In Windows, this macro is needed to expose the PI macros.
     #define _USE_MATH_DEFINES
 #endif
