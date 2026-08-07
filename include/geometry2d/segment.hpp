@@ -12,6 +12,12 @@ namespace geometry2d
 
         Segment() {}
 
+        Segment(const Point &a, const Point &b)
+        {
+            Segment::a = a;
+            Segment::b = b;
+        }
+
         Segment(float ax, float ay, float bx, float by)
         {
             a.x = ax;
@@ -19,12 +25,6 @@ namespace geometry2d
 
             b.x = bx;
             b.y = by;
-        }
-
-        Segment(const Point &a, const Point &b)
-        {
-            Segment::a = a;
-            Segment::b = b;
         }
 
         bool operator==(const Segment &other) const { return equalsApprox(other); }
