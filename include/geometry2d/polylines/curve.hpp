@@ -1,6 +1,7 @@
 #pragma once
 #include <geometry2d/point.hpp>
 #include <geometry2d/segment.hpp>
+#include <iosfwd>
 
 namespace geometry2d::polylines
 {
@@ -12,6 +13,8 @@ namespace geometry2d::polylines
 
         Cubic
     };
+
+    std::ostream &operator<<(std::ostream &os, BezierType type);
 
     class Curve
     {
@@ -88,29 +91,32 @@ namespace geometry2d::polylines
         Point aControlOffset_;
         Point bControlOffset_;
 
+        void assertBezierType(BezierType expectedType) const;
+
     public:
-        CurveDynamic()
-        {  
-            bezierType_ = BezierType::Linear;
-        }
+        CurveDynamic() { setLinear(); }
+        CurveDynamic(const Point &centerControlOffset) { setQuadratic(centerControlOffset); }
+        CurveDynamic(const Point &startControlOffset, const Point &endControlOffset) { setCubic(startControlOffset, endControlOffset); }
 
-        CurveDynamic(const Point &centerControlOffset)
-        {  
-            bezierType_ = BezierType::Quadratic;
+        void setLinear();
+        void setQuadratic(const Point &centerControlOffset);
+        void setCubic(const Point &startControlOffset, const Point &endControlOffset);
 
-            aControlOffset_ = centerControlOffset;
-        }
-
-        CurveDynamic(const Point &startControlOffset, const Point &endControlOffset)
-        {  
-            bezierType_ = BezierType::Quadratic;
-
-            aControlOffset_ = startControlOffset;
-            bControlOffset_ = endControlOffset;
-        }
+        void set(const CurveLinear &curve) { setLinear(); }
+        void set(const CurveQuadratic &curve) { setQuadratic(curve.centerControlOffset); }
+        void set(const CurveCubic &curve) { setCubic(curve.startControlOffset, curve.endControlOffset); }
 
         BezierType getBezierType() const override { return bezierType_; }
 
         Point getPoint(const Point &a, const Point &b, float t) const;
+
+        CurveLinear getAsLinear() const;
+        void getAsLinear(CurveLinear *buffer) const;
+
+        CurveQuadratic getAsQuadratic() const;
+        void getAsQuadratic(CurveQuadratic *buffer) const;
+
+        CurveCubic getAsCubic() const;
+        void getAsCubic(CurveCubic *buffer) const;
     };
 }

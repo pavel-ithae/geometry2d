@@ -1,9 +1,30 @@
 #include <geometry2d/polylines/curve.hpp>
 #include <stdexcept>
 #include <string>
+#include <sstream>
 
 using namespace geometry2d;
 using namespace geometry2d::polylines;
+
+std::ostream &geometry2d::polylines::operator<<(std::ostream &os, BezierType type)
+{
+    switch (type)
+    {
+    case BezierType::Linear:
+        os << "Linear";
+        break;
+    
+    case BezierType::Quadratic:
+        os << "Quadratic";
+        break;
+
+    case BezierType::Cubic:
+        os << "Cubic";
+        break;
+    }
+
+    return os;
+}
 
 Point Curve::getPointInBezierLinear(const Point &a, const Point &b, float t)
 {
@@ -39,6 +60,38 @@ Point CurveCubic::getPoint(const Point &a, const Point &b, float t) const
     return getPointInBezierCubic(a, b, t, CurveCubic::startControlOffset + a, CurveCubic::endControlOffset + b);
 }
 
+void CurveDynamic::assertBezierType(BezierType expectedType) const
+{
+    if (CurveDynamic::bezierType_ != expectedType)
+    {
+        std::stringstream stream;
+
+        stream << "Expected beizer of type \"" << expectedType << "\" but is \"" << CurveDynamic::bezierType_ << "\".";
+
+        throw std::logic_error(stream.str());
+    }
+}
+
+void CurveDynamic::setLinear()
+{
+    bezierType_ = BezierType::Linear;
+}
+
+void CurveDynamic::setQuadratic(const Point &centerControlOffset)
+{
+    bezierType_ = BezierType::Quadratic;
+
+    aControlOffset_ = centerControlOffset;
+}
+
+void CurveDynamic::setCubic(const Point &startControlOffset, const Point &endControlOffset)
+{
+    bezierType_ = BezierType::Quadratic;
+
+    aControlOffset_ = startControlOffset;
+    bControlOffset_ = endControlOffset;
+}
+
 Point CurveDynamic::getPoint(const Point &a, const Point &b, float t) const
 {
     switch (CurveDynamic::bezierType_)
@@ -55,4 +108,45 @@ Point CurveDynamic::getPoint(const Point &a, const Point &b, float t) const
     default:
         throw std::logic_error(std::string("Undefined curve bezier type."));
     }
+}
+
+CurveLinear CurveDynamic::getAsLinear() const
+{
+    CurveDynamic::assertBezierType(BezierType::Linear);
+    
+    return CurveLinear();
+}
+
+void CurveDynamic::getAsLinear(CurveLinear *buffer) const
+{
+    CurveDynamic::assertBezierType(BezierType::Linear);
+}
+
+CurveQuadratic CurveDynamic::getAsQuadratic() const
+{
+    CurveDynamic::assertBezierType(BezierType::Quadratic);
+
+    return CurveQuadratic(CurveDynamic::aControlOffset_);
+}
+
+void CurveDynamic::getAsQuadratic(CurveQuadratic *buffer) const
+{
+    CurveDynamic::assertBezierType(BezierType::Quadratic);
+
+    buffer->centerControlOffset = CurveDynamic::aControlOffset_;
+}
+
+CurveCubic CurveDynamic::getAsCubic() const
+{
+    CurveDynamic::assertBezierType(BezierType::Cubic);
+
+    return CurveCubic(CurveDynamic::aControlOffset_, CurveDynamic::bControlOffset_);
+}
+
+void geometry2d::polylines::CurveDynamic::getAsCubic(CurveCubic *buffer) const
+{
+    CurveDynamic::assertBezierType(BezierType::Cubic);
+
+    buffer->startControlOffset = CurveDynamic::aControlOffset_;
+    buffer->endControlOffset = CurveDynamic::bControlOffset_;
 }
