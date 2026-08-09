@@ -19,6 +19,25 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "BUILD_TESTING": true
             }
+        },
+        {
+            "name": "library_api",
+            "displayName": "Build Dynamic API Library",
+            "description": "Builds Geometry2D as a dynamic API library.",
+            "inherits": "library",
+            "cacheVariables": {
+                "BUILD_GEOMETRY2D_API" : true
+            }
+        },
+        {
+            "name": "test_api",
+            "displayName": "Build Dynamic API Library w/ Test",
+            "description": "Builds Geometry2D as a dynamic API library and its tests.",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "inherits": "test",
+            "cacheVariables": {
+                "BUILD_GEOMETRY2D_API" : true
+            }
         }
     ],
     "buildPresets": [

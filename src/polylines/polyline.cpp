@@ -5,7 +5,7 @@
 using namespace geometry2d;
 using namespace geometry2d::polylines;
 
-void Polyline::assertBounds(int index, bool includePastEnd = false)
+void Polyline::assertBounds(int index, bool includePastEnd)
 {
     if ((index < 0) || (includePastEnd ? (index > Polyline::vertices_.size()) : (index >= Polyline::vertices_.size())))
     {
