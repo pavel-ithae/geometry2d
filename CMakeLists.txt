@@ -1,5 +1,5 @@
 # CMake version.
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.10)
 
 # Project.
 project(geometry2dLibrary)
